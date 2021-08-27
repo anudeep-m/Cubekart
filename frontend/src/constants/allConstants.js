@@ -1,0 +1,13 @@
+//All Products List Constants
+export const PRODUCT_LIST_REQUEST = 'PRODUCT_LIST_REQUEST'
+export const PRODUCT_LIST_SUCCESS = 'PRODUCT_LIST_SUCCESS'
+export const PRODUCT_LIST_FAILED = 'PRODUCT_LIST_FAILED'
+
+//Single Product Details Constants
+export const ONE_PRODUCT_REQUEST = 'ONE_PRODUCT_REQUEST'
+export const ONE_PRODUCT_SUCCESS = 'ONE_PRODUCT_SUCCESS'
+export const ONE_PRODUCT_FAILED = 'ONE_PRODUCT_FAILED'
+
+//Cart Constants
+export const CART_ADD_ITEM = 'CARD_ADD_ITEM'
+export const CART_REMOVE_ITEM = 'CARD_REMOVE_ITEM'
