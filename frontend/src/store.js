@@ -1,21 +1,70 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { productListReducer } from './reducers/productsReducers.js'
-import { oneProductReducer } from './reducers/oneProductReducer.js'
+
+import {
+  productListReducer,
+  oneProductReducer,
+  productAdditionByAdminReducer,
+  productDeleteByAdminReducer,
+  productUpdateByAdminReducer,
+} from './reducers/productsReducers.js'
 import { cartReducer } from './reducers/cartReducer.js'
+
+import {
+  userLoginReducer,
+  userRegisterReducer,
+  userDetailsReducer,
+  userUpdateProfileReducer,
+  userListByAdminReducer,
+  userDeleteByAdminReducer,
+  userUpdateByAdminReducer,
+} from './reducers/userReducers.js'
+
+import {
+  myOrdersListReducer,
+  orderCreateReducer,
+  orderDetailsReducer,
+  orderPayReducer,
+} from './reducers/orderReducer.js'
 
 const reducer = combineReducers({
   productList: productListReducer,
   oneProduct: oneProductReducer,
   cart: cartReducer,
+  userLogin: userLoginReducer,
+  userRegister: userRegisterReducer,
+  userDetails: userDetailsReducer,
+  userUpdateProfile: userUpdateProfileReducer,
+  orderCreate: orderCreateReducer,
+  orderDetails: orderDetailsReducer,
+  orderPay: orderPayReducer,
+  myOrdersList: myOrdersListReducer,
+  userList: userListByAdminReducer,
+  userDelete: userDeleteByAdminReducer,
+  userUpdate: userUpdateByAdminReducer,
+  productAdd: productAdditionByAdminReducer,
+  productDelete: productDeleteByAdminReducer,
+  productUpdate: productUpdateByAdminReducer,
 })
+
 const cartItemsfromLocalStorage = localStorage.getItem('cartList')
   ? JSON.parse(localStorage.getItem('cartList'))
   : []
+const userInfofromLocalStorage = localStorage.getItem('cartList')
+  ? JSON.parse(localStorage.getItem('userInfo'))
+  : null
+
+const shippingAddressfromLocalStorage = localStorage.getItem('shippingAddress')
+  ? JSON.parse(localStorage.getItem('shippingAddress'))
+  : {}
 
 const initialState = {
-  cart: { cartList: cartItemsfromLocalStorage },
+  cart: {
+    cartList: cartItemsfromLocalStorage,
+    shippingAddress: shippingAddressfromLocalStorage,
+  },
+  userLogin: { userInfo: userInfofromLocalStorage },
 }
 const middleware = [thunk]
 const store = createStore(

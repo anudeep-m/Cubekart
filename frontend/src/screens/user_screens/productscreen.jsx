@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { singleProduct } from '../actions/oneProductActions.js'
+import { singleProduct } from '../../actions/productActions.js'
 import { Link } from 'react-router-dom'
 import { Row, Col, Image, ListGroup, Button, Form } from 'react-bootstrap'
-import Rating from '../components/rating'
-import Loader from '../components/loader.jsx'
-import Message from '../components/message.jsx'
+import Rating from '../../components/rating'
+import Loader from '../../components/loader.jsx'
+import Message from '../../components/message.jsx'
 
 const ProductScreen = ({ history, match }) => {
   const [qty, setQty] = useState(1)
@@ -70,7 +70,7 @@ const ProductScreen = ({ history, match }) => {
                 <Row>
                   <Col>Price</Col>
                   <Col>
-                    <strong>₹{product.price}</strong>
+                    <strong>₹ {product.price}</strong>
                   </Col>
                 </Row>
               </ListGroup.Item>
@@ -81,11 +81,17 @@ const ProductScreen = ({ history, match }) => {
                     <strong>
                       {' '}
                       {product.countinStock > 0 ? (
-                        <p className='m-0' style={{ color: 'green' }}>
+                        <p
+                          className='m-0'
+                          style={{ color: 'green', fontSize: 16 }}
+                        >
                           In Stock
                         </p>
                       ) : (
-                        <p className='m-0' style={{ color: 'red' }}>
+                        <p
+                          className='m-0'
+                          style={{ color: 'red', fontSize: 16 }}
+                        >
                           Out of Stock
                         </p>
                       )}
@@ -97,9 +103,7 @@ const ProductScreen = ({ history, match }) => {
               {product.countinStock > 0 && (
                 <ListGroup.Item>
                   <Row>
-                    <Col>
-                      <p className='py-2 m-0'>Qty</p>
-                    </Col>
+                    <Col className='py-2'>Qty</Col>
                     <Col>
                       <Form.Control
                         as='select'

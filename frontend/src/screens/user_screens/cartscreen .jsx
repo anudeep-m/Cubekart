@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap'
-import Message from '../components/message.jsx'
-import { addToCart, removeFromCart } from '../actions/cartActions'
+import Message from '../../components/message.jsx'
+import { addToCart, removeFromCart } from '../../actions/cartActions'
 
 const CartScreen = ({ match, location, history }) => {
   const productid = match.params.id
@@ -36,9 +36,9 @@ const CartScreen = ({ match, location, history }) => {
       </div>
 
       {cartList.length === 0 ? (
-        <Message variant='alert'>
-          <h4 className='mx-2 p-2 my-auto'>Your cart is empty </h4>
-          <Link to='/' className='btn btn-info mx-2 px-4 py-auto '>
+        <Message variant='dark'>
+          <h4 className='mx-2 p-2 my-auto'>Your cart is empty</h4>
+          <Link to='/' className='mx-2 p-2 my-auto'>
             Go Back to Shop
           </Link>
         </Message>
@@ -153,7 +153,7 @@ const CartScreen = ({ match, location, history }) => {
                     disabled={cartList.length === 0}
                     onClick={checkoutHandler}
                   >
-                    <p>Proceed to Check Out</p>
+                    Proceed to Check Out
                   </Button>
                 </ListGroup.Item>
               </ListGroup>

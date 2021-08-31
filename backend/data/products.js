@@ -1,3 +1,18 @@
+// const product= {
+//   name,
+//   image,
+//   countinStock,
+//   model_no,
+//   brand,
+//   price,
+//   rating,
+//   numReviews,
+//   size,
+//   width,
+//   dimensions,
+//   colour,
+// }
+
 const products = [
   {
     name: 'Black Full Rim Square Sunglasses',
