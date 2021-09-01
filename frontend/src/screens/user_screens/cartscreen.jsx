@@ -16,7 +16,9 @@ const CartScreen = ({ match, location, history }) => {
   const { cartList } = cart
 
   useEffect(() => {
-    dispatch(addToCart(productid, qty))
+    if (productid) {
+      dispatch(addToCart(productid, qty))
+    }
   }, [dispatch, productid, qty])
 
   const removefromCartHandler = (id) => {
@@ -29,9 +31,6 @@ const CartScreen = ({ match, location, history }) => {
   return (
     <>
       <div className='d-flex'>
-        {/* <Link to='/' className='btn btn-primary my-3'>
-          Go Back
-        </Link> */}
         <h2 className='align-middle my-4 mx-auto'>Shopping Cart</h2>
       </div>
 

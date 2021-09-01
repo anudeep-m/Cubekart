@@ -32,7 +32,7 @@ const ProfileScreen = ({ location, history }) => {
   const { loading, error, user } = userDetails
 
   const userLogin = useSelector((state) => state.userLogin)
-  const { userInfo } = userLogin
+  let { userInfo } = userLogin
 
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
   const { success: successUpdate } = userUpdateProfile
@@ -151,7 +151,7 @@ const ProfileScreen = ({ location, history }) => {
             </thead>
             <tbody>
               {orders.map((order) => (
-                <tr key='order._id'>
+                <tr key={order._id}>
                   <td>{order._id}</td>
                   <td>{datecutter(order.createdAt)}</td>
                   <td>{order.totalPrice}</td>

@@ -24,7 +24,6 @@ import {
   USER_UPDATE_BA_REQUEST,
   USER_UPDATE_BA_SUCCESS,
   USER_UPDATE_BA_FAILED,
-  USER_UPDATE_BA_RESET,
 } from '../constants/allConstants'
 import axios from 'axios'
 
@@ -63,13 +62,16 @@ export const login = (email, password) => async (dispatch) => {
   }
 }
 
-export const logout = (dispatch) => {
-  dispatch({ type: USER_LIST_BA_RESET })
-  dispatch({ type: USER_UPDATE_BA_RESET })
+export const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo')
+  localStorage.removeItem('cartItems')
+  localStorage.removeItem('shippingAddress')
+  localStorage.removeItem('paymentMethod')
   dispatch({ type: USER_LOGOUT })
+  dispatch({ type: USER_LIST_BA_RESET })
   dispatch({ type: MY_ORDERS_LIST_RESET })
   dispatch({ type: USER_DETAILS_RESET })
+  document.location.href = '/login'
 }
 
 export const register = (name, email, password) => async (dispatch) => {
@@ -135,12 +137,16 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
       payload: data,
     })
   } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout())
+    }
     dispatch({
       type: USER_DETAILS_FAILED,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: message,
     })
   }
 }
@@ -174,12 +180,16 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
     })
     localStorage.setItem('userInfo', JSON.stringify(data))
   } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout())
+    }
     dispatch({
       type: USER_UPDATE_PROFILE_FAILED,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: message,
     })
   }
 }
@@ -275,6 +285,7 @@ export const updateUserBA = (user) => async (dispatch, getState) => {
       type: USER_DETAILS_SUCCESS,
       payload: data,
     })
+    dispatch({ type: USER_DETAILS_RESET })
   } catch (error) {
     dispatch({
       type: USER_UPDATE_BA_FAILED,

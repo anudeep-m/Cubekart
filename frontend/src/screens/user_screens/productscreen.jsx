@@ -86,22 +86,22 @@ const ProductScreen = ({ history, match }) => {
         <>
           <Meta title={product.name} />
           <Row className='mx-3 d-flex justify-content-around'>
-            <Col sm={12} md={10} lg={5} className='text-center my-2'>
+            <Col xs={10} sm={10} md={10} lg={5} className='text-center my-2'>
               <ListGroup variant='flush' className='p-3'>
                 <Image src={product.image} alt={product.name} fluid />
               </ListGroup>
             </Col>
 
-            <Col sm={7} md={4} lg={7}>
+            <Col xs={18} sm={12} md={10} lg={7}>
               <Row>
-                <Col sm={9} md={6} lg={6} className='my-2'>
+                <Col xs={12} sm={12} md={7} lg={7} className='my-2'>
                   <ListGroup variant='flush' className='p-3'>
                     <ListGroup.Item>
                       <strong>{product.brand}</strong>
                     </ListGroup.Item>
 
                     <ListGroup.Item>
-                      <h3>{product.name}</h3>
+                      <h3 className='productcardname'>{product.name}</h3>
                     </ListGroup.Item>
 
                     <ListGroup.Item>
@@ -115,7 +115,7 @@ const ProductScreen = ({ history, match }) => {
                   </ListGroup>
                 </Col>
 
-                <Col sm={7} md={4} lg={4}>
+                <Col xs={12} sm={12} md={5} lg={5}>
                   <ListGroup
                     className='py-3 px-0 text-center my-2'
                     variant='flush'
@@ -192,7 +192,7 @@ const ProductScreen = ({ history, match }) => {
                 </Col>
               </Row>
               <Row>
-                <Col sm={7} md={4} lg={10}>
+                <Col xs={14} sm={12} md={12} lg={12}>
                   <ListGroup.Item varaint='flush'>
                     <h2>REVIEWS</h2>
                     <ListGroup>
@@ -200,7 +200,10 @@ const ProductScreen = ({ history, match }) => {
                         <Message variant='info'>No Reviews</Message>
                       ) : (
                         product.reviews.map((review) => (
-                          <ListGroup.Item className='m-0 py-2'>
+                          <ListGroup.Item
+                            key={review.name}
+                            className='m-0 py-3'
+                          >
                             <Row>
                               <Col>
                                 <strong className='m-0 py-1'>
@@ -219,7 +222,7 @@ const ProductScreen = ({ history, match }) => {
                           </ListGroup.Item>
                         ))
                       )}
-                      <ListGroup.Item>
+                      <ListGroup.Item className='py-4'>
                         <h4>WRITE A CUSTOMER REVIEW</h4>
                         {errorProductReview && (
                           <Message varaint='danger'>

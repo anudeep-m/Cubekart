@@ -15,7 +15,7 @@ const Header = () => {
   const { userInfo } = userLogin
 
   const logoutHandler = () => {
-    dispatch(logout)
+    dispatch(logout())
   }
 
   return (
@@ -23,7 +23,7 @@ const Header = () => {
       <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
         <Container>
           <LinkContainer to='/'>
-            <Navbar.Brand>
+            <Navbar.Brand className='logo'>
               {' '}
               <img
                 alt='Icon'

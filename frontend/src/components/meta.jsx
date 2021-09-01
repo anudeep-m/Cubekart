@@ -13,7 +13,7 @@ const Meta = ({ title, description, keywords }) => {
 
 Meta.defaultProps = {
   title: 'Cubekart | Home',
-  description: 'Your search for Goggles ends here',
+  description: 'Cubekart',
   keywords: 'goggles, sunglasses, cooling glasses online shopping',
 }
 
