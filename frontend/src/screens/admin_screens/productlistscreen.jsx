@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Row, Col, Table, Button } from 'react-bootstrap'
+import { Table, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
 import Message from '../../components/message'
@@ -11,15 +11,19 @@ import {
 } from '../../actions/productActions'
 
 import { PRODUCT_ADD_BA_RESET } from '../../constants/allConstants'
+import { Link } from 'react-router-dom'
+import Paginate from '../../components/paginate'
 
 const ProductListScreen = ({ history, match }) => {
+  const pagenumber = match.params.pagenumber
+
   const dispatch = useDispatch()
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
   const productList = useSelector((state) => state.productList)
-  const { loading, error, products } = productList
+  const { loading, error, products, pages, page } = productList
 
   const productAdd = useSelector((state) => state.productAdd)
   const {
@@ -39,15 +43,24 @@ const ProductListScreen = ({ history, match }) => {
   useEffect(() => {
     dispatch({ type: PRODUCT_ADD_BA_RESET })
 
-    if (!userInfo.isAdmin) {
+    if (!userInfo || !userInfo.isAdmin) {
       history.push('/login')
     }
+
     if (successAdd) {
       history.push(`/admin/product/${addedProduct._id}/edit`)
     } else {
-      dispatch(listProducts())
+      dispatch(listProducts('', pagenumber))
     }
-  }, [history, userInfo, dispatch, successDelete, successAdd, addedProduct])
+  }, [
+    history,
+    userInfo,
+    dispatch,
+    successDelete,
+    successAdd,
+    addedProduct,
+    pagenumber,
+  ])
 
   const deleteproductHandler = (productId) => {
     if (window.confirm('Are you sure? ')) {
@@ -60,17 +73,13 @@ const ProductListScreen = ({ history, match }) => {
 
   return (
     <>
-      <Row className='align-items-center'>
-        <Col>
-          <h2 className='py-1'>Products</h2>
-        </Col>
-
-        <Col className='text-right'>
-          <Button className='my-4' onClick={createProductHandler}>
-            <i className='fas fa-plus'></i> Create Product
-          </Button>
-        </Col>
-      </Row>
+      <h2 className='py-2 text-center'>Products</h2>
+      <div className='d-flex justify-content-end p-0'>
+        <Button className='my-1' onClick={createProductHandler}>
+          <i className='fas fa-plus'></i>
+          {'  '}Create Product
+        </Button>
+      </div>
 
       {loadingAdd && <Loader />}
       {errorAdd && <Message variant='danger'>{errorAdd}</Message>}
@@ -97,7 +106,14 @@ const ProductListScreen = ({ history, match }) => {
           <tbody>
             {products.map((product) => (
               <tr key={product._id}>
-                <td>{product._id}</td>
+                <td>
+                  <Link
+                    to={`/product/${product._id}`}
+                    className='text-decoration-none'
+                  >
+                    {product._id}
+                  </Link>
+                </td>
                 <td>{product.name}</td>
                 <td>{product.brand}</td>
                 <td>₹ {product.price}</td>
@@ -122,6 +138,7 @@ const ProductListScreen = ({ history, match }) => {
           </tbody>
         </Table>
       )}
+      <Paginate pages={pages} page={page} isAdmin={true} />
     </>
   )
 }

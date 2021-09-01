@@ -13,6 +13,14 @@ import {
   ORDER_PAY_REQUEST,
   ORDER_PAY_RESET,
   ORDER_PAY_SUCCESS,
+  ORDERS_LIST_BA_REQUEST,
+  ORDERS_LIST_BA_SUCCESS,
+  ORDERS_LIST_BA_FAILED,
+  ORDERS_LIST_BA_RESET,
+  ORDER_DELIVER_REQUEST,
+  ORDER_DELIVER_SUCCESS,
+  ORDER_DELIVER_FAILED,
+  ORDER_DELIVER_RESET,
 } from '../constants/allConstants'
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -68,6 +76,26 @@ export const orderPayReducer = (state = {}, action) => {
       return state
   }
 }
+
+export const orderDeliverReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ORDER_DELIVER_REQUEST:
+      return { loading: true }
+
+    case ORDER_DELIVER_SUCCESS:
+      return { loading: false, success: true }
+
+    case ORDER_DELIVER_FAILED:
+      return { loading: false, error: action.payload }
+
+    case ORDER_DELIVER_RESET:
+      return {}
+
+    default:
+      return state
+  }
+}
+
 export const myOrdersListReducer = (state = { orders: [] }, action) => {
   switch (action.type) {
     case MY_ORDERS_LIST_REQUEST:
@@ -80,6 +108,25 @@ export const myOrdersListReducer = (state = { orders: [] }, action) => {
       return { loading: false, error: action.payload }
 
     case MY_ORDERS_LIST_RESET:
+      return { orders: [] }
+
+    default:
+      return state
+  }
+}
+
+export const allOrdersListByAdminReducer = (state = { orders: [] }, action) => {
+  switch (action.type) {
+    case ORDERS_LIST_BA_REQUEST:
+      return { loading: true }
+
+    case ORDERS_LIST_BA_SUCCESS:
+      return { loading: false, orders: action.payload }
+
+    case ORDERS_LIST_BA_FAILED:
+      return { loading: false, error: action.payload }
+
+    case ORDERS_LIST_BA_RESET:
       return { orders: [] }
 
     default:

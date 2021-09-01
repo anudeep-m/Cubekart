@@ -35,7 +35,7 @@ const ProfileScreen = ({ location, history }) => {
   const { userInfo } = userLogin
 
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
-  const { success } = userUpdateProfile
+  const { success: successUpdate } = userUpdateProfile
 
   const myOrdersList = useSelector((state) => state.myOrdersList)
   const { loading: loadingOrders, error: errorOrders, orders } = myOrdersList
@@ -44,7 +44,7 @@ const ProfileScreen = ({ location, history }) => {
     if (!userInfo) {
       history.push('/login')
     } else {
-      if (!user || !user.name || success) {
+      if (!user || !user.name || successUpdate) {
         dispatch({ type: USER_UPDATE_PROFILE_RESET })
         dispatch(getUserDetails('profile'))
         dispatch(listMyOrders())
@@ -53,7 +53,7 @@ const ProfileScreen = ({ location, history }) => {
         setEmail(user.email)
       }
     }
-  }, [dispatch, history, userInfo, user, success])
+  }, [dispatch, history, userInfo, user, successUpdate])
 
   const submitHandler = (event) => {
     event.preventDefault()
@@ -64,9 +64,9 @@ const ProfileScreen = ({ location, history }) => {
       dispatch(
         updateUserProfile({
           id: user._id,
-          name: name,
-          email: email,
-          password: password,
+          name,
+          email,
+          password,
         })
       )
     }
@@ -75,56 +75,59 @@ const ProfileScreen = ({ location, history }) => {
     <Row>
       <Col md='3'>
         <h2 className='text-center py-2'>User Profile</h2>
+        {message && <Message variant='danger'>{message}</Message>}
+        {}
+        {successUpdate && <Message variant='success'>Profile Updated</Message>}
+        {loading ? (
+          <Loader />
+        ) : error ? (
+          <Message variant='danger'>{error}</Message>
+        ) : (
+          <Form onSubmit={submitHandler} className='d-flex flex-column'>
+            <Form.Group controlId='name' className='my-2 '>
+              <Form.Label className='mx-2'>Name</Form.Label>
+              <Form.Control
+                type='name'
+                placeholder='Enter name'
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
 
-        <Form onSubmit={submitHandler} className='d-flex flex-column'>
-          {success && <Message variant='success'>Profile Updated</Message>}
-          {message && <Message variant='danger'>{message}</Message>}
-          {error && <Message variant='danger'>{error}</Message>}
-          {loading && <Loader />}
-          <Form.Group controlId='name' className='my-2 '>
-            <Form.Label className='mx-2'>Name</Form.Label>
-            <Form.Control
-              type='name'
-              placeholder='Enter name'
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+            <Form.Group controlId='email' className='my-2 '>
+              <Form.Label className='mx-2'>Email Address</Form.Label>
+              <Form.Control
+                type='email'
+                placeholder='Enter email'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
 
-          <Form.Group controlId='email' className='my-2 '>
-            <Form.Label className='mx-2'>Email Address</Form.Label>
-            <Form.Control
-              type='email'
-              placeholder='Enter email'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+            <Form.Group controlId='password' className='my-2 '>
+              <Form.Label className='mx-2'>Password</Form.Label>
+              <Form.Control
+                type='password'
+                placeholder='Enter password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
 
-          <Form.Group controlId='password' className='my-2 '>
-            <Form.Label className='mx-2'>Password</Form.Label>
-            <Form.Control
-              type='password'
-              placeholder='Enter password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
-
-          <Form.Group controlId='confirmPassword' className='my-2 '>
-            <Form.Label className='mx-2'>Confirm Password</Form.Label>
-            <Form.Control
-              type='password'
-              placeholder='Confirm password'
-              value={confirmPassword}
-              onChange={(e) => setconfirmPassword(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
-          <Button type='submit' variant='primary' className='my-2 mx-auto'>
-            {' '}
-            Update{' '}
-          </Button>
-        </Form>
+            <Form.Group controlId='confirmPassword' className='my-2 '>
+              <Form.Label className='mx-2'>Confirm Password</Form.Label>
+              <Form.Control
+                type='password'
+                placeholder='Confirm password'
+                value={confirmPassword}
+                onChange={(e) => setconfirmPassword(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+            <Button type='submit' variant='primary' className='my-2 mx-auto'>
+              Update
+            </Button>
+          </Form>
+        )}
       </Col>
       <Col md='9'>
         <h2 className='text-center py-2'>My Orders</h2>

@@ -1,19 +1,24 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import Loader from './loader'
 import Rating from './rating'
 
 const Product = ({ product }) => {
   return (
     <Card className='my-3 p-3 rounded'>
       <Link to={`/product/${product._id}`}>
-        <Card.Img src={product.image} variant='top' />
+        {!product.image ? (
+          <Loader />
+        ) : (
+          <Card.Img src={product.image} variant='top' />
+        )}
       </Link>
 
       <Card.Body>
         <Link to={`/product/${product._id}`} className='text-decoration-none'>
           <Card.Title as='div' className='text-center'>
-            <h4>
+            <h4 className='productcardname'>
               <strong>{product.name} </strong>
             </h4>
           </Card.Title>
@@ -29,7 +34,6 @@ const Product = ({ product }) => {
         <Card.Text as='h5' className='text-center mt-3'>
           <strong>₹ {product.price}</strong>
         </Card.Text>
-        {/* <Button variant='secondary'>Add to Cart</Button> */}
       </Card.Body>
     </Card>
   )

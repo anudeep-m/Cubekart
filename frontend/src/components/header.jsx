@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'
 import { logout } from '../actions/userActions'
 import Icon from '../pictures/CuBeKarticon.png'
+import SearchBox from './searchbox'
+import { Route } from 'react-router-dom'
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -34,6 +36,7 @@ const Header = () => {
 
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
+            <Route render={({ history }) => <SearchBox history={history} />} />
             <Nav className='ms-auto text-center'>
               <LinkContainer to='/cart'>
                 <Nav.Link>

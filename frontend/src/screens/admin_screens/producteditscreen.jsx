@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Row, Col, Button } from 'react-bootstrap'
+import axios from 'axios'
+import { Form, Row, Col, Button, Image } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { singleProduct, updateProductBA } from '../../actions/productActions'
+import { productDetails, updateProductBA } from '../../actions/productActions'
 import { PRODUCT_EDIT_BA_RESET } from '../../constants/allConstants'
 import Loader from '../../components/loader.jsx'
 import Message from '../../components/message.jsx'
@@ -12,19 +13,16 @@ const ProductEditScreen = ({ match, history }) => {
 
   const [name, setName] = useState('')
   const [brand, setBrand] = useState('')
-  const [model_no, setModelNo] = useState('')
   const [image, setImage] = useState('')
   const [price, setPrice] = useState(0)
   const [countinStock, setCountInStock] = useState(0)
   const [size, setSize] = useState('')
-  const [width, setWidth] = useState('')
-  const [dimensions, setDimensions] = useState('')
-  const [colour, setColour] = useState('')
+  const [uploading, setUploading] = useState(false)
 
   const dispatch = useDispatch()
 
-  const oneProduct = useSelector((state) => state.oneProduct)
-  const { loading, error, product } = oneProduct
+  const aboutProduct = useSelector((state) => state.aboutProduct)
+  const { loading, error, product } = aboutProduct
 
   const productUpdate = useSelector((state) => state.productUpdate)
   const {
@@ -39,21 +37,40 @@ const ProductEditScreen = ({ match, history }) => {
       history.push('/admin/productlist')
     } else {
       if (!product.name || product._id !== productId) {
-        dispatch(singleProduct(productId))
+        dispatch(productDetails(productId))
       } else {
         setName(product.name)
         setBrand(product.brand)
-        setModelNo(product.model_no)
         setImage(product.image)
         setPrice(product.price)
         setCountInStock(product.countinStock)
         setSize(product.size)
-        setWidth(product.width)
-        setDimensions(product.dimensions)
-        setColour(product.colour)
       }
     }
   }, [history, dispatch, productId, product, successUpdate])
+
+  const uploadeFilenadler = async (e) => {
+    const file = e.target.files[0]
+    const formData = new FormData()
+    formData.append('image', file)
+    setUploading(true)
+
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+
+      const { data } = await axios.post('/api/upload', formData, config)
+
+      setImage(data)
+      setUploading(false)
+    } catch (error) {
+      console.error(error)
+      setUploading(false)
+    }
+  }
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -63,22 +80,18 @@ const ProductEditScreen = ({ match, history }) => {
         name,
         brand,
         image,
-        model_no,
         price,
         countinStock,
         size,
-        width,
-        dimensions,
-        colour,
       })
     )
   }
   return (
     <>
-      <Link className='btn btn-primary m-4' to='/admin/productlist'>
+      <Link className='btn btn-primary mt-4 ml-4' to='/admin/productlist'>
         Go Back{' '}
       </Link>
-      <h2 className='text-center py-3'>Edit Product</h2>
+      <h2 className='text-center pb-2'>Edit Product</h2>
       {loadingUpdate && <Loader />}
       {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
       {loading ? (
@@ -87,8 +100,11 @@ const ProductEditScreen = ({ match, history }) => {
         <Message variant='danger'>{error}</Message>
       ) : (
         <Form onSubmit={submitHandler} className='d-flex flex-column'>
-          <Row>
-            <Col md='4'>
+          <Col>
+            <Row md='5' className='justify-content-center'>
+              {!image ? <Loader /> : <Image src={image} />}
+            </Row>
+            <Row md='2'>
               <Form.Group controlId='name' className='my-2'>
                 <Form.Label className='mx-2'>Product Name</Form.Label>
                 <Form.Control
@@ -108,28 +124,55 @@ const ProductEditScreen = ({ match, history }) => {
                   onChange={(e) => setBrand(e.target.value)}
                 ></Form.Control>
               </Form.Group>
-
-              <Form.Group controlId='model_no' className='my-2'>
-                <Form.Label className='mx-2'>Model No</Form.Label>
-                <Form.Control
-                  type='text'
-                  placeholder='Enter Model No'
-                  value={model_no}
-                  onChange={(e) => setModelNo(e.target.value)}
-                ></Form.Control>
-              </Form.Group>
-            </Col>
-            <Col md='4'>
+            </Row>
+            <Row md='2'>
               <Form.Group controlId='image' className='my-2'>
                 <Form.Label className='mx-2'>Image</Form.Label>
-                <Form.Control
-                  type='text'
-                  placeholder='Enter image url'
-                  value={image}
-                  onChange={(e) => setImage(e.target.value)}
-                ></Form.Control>
+                <Row>
+                  <Col>
+                    <Form.Control
+                      type='text'
+                      placeholder='Enter image url'
+                      value={image}
+                      onChange={(e) => setImage(e.target.value)}
+                    ></Form.Control>
+                  </Col>
+                  <Col>
+                    <Form.File
+                      id='image-file'
+                      custom
+                      onChange={uploadeFilenadler}
+                      className='my-2'
+                    ></Form.File>
+                    {uploading && <Loader />}
+                  </Col>
+                </Row>
               </Form.Group>
 
+              <Form.Group controlId='size' className='my-2'>
+                <Form.Label className='mx-2'>Size</Form.Label>
+                <Form.Control
+                  as='select'
+                  type='option'
+                  placeholder='Enter size'
+                  value={size}
+                  onChange={(e) => setSize(e.target.value)}
+                >
+                  {' '}
+                  <option valaue=''>Select size</option>
+                  <option key='1' value='Small'>
+                    Small
+                  </option>{' '}
+                  <option key='2' value='Medium'>
+                    Medium
+                  </option>{' '}
+                  <option key='3' value='Large'>
+                    Large
+                  </option>
+                </Form.Control>
+              </Form.Group>
+            </Row>
+            <Row md='2'>
               <Form.Group controlId='price' className='my-2'>
                 <Form.Label className='mx-2'>Price</Form.Label>
                 <Form.Control
@@ -139,7 +182,6 @@ const ProductEditScreen = ({ match, history }) => {
                   onChange={(e) => setPrice(e.target.value)}
                 ></Form.Control>
               </Form.Group>
-
               <Form.Group controlId='countinStock' className='my-2'>
                 <Form.Label className='mx-2'>Count In Stock</Form.Label>
                 <Form.Control
@@ -149,50 +191,8 @@ const ProductEditScreen = ({ match, history }) => {
                   onChange={(e) => setCountInStock(e.target.value)}
                 ></Form.Control>
               </Form.Group>
-
-              <Form.Group controlId='size' className='my-2'>
-                <Form.Label className='mx-2'>Size</Form.Label>
-                <Form.Control
-                  type='text'
-                  placeholder='Enter size'
-                  value={size}
-                  onChange={(e) => setSize(e.target.value)}
-                ></Form.Control>
-              </Form.Group>
-            </Col>
-            <Col md='4'>
-              <Form.Group controlId='width' className='my-2'>
-                <Form.Label className='mx-2'>Width</Form.Label>
-                <Form.Control
-                  type='number'
-                  placeholder='Enter width'
-                  value={width}
-                  onChange={(e) => setWidth(e.target.value)}
-                ></Form.Control>
-              </Form.Group>
-
-              <Form.Group controlId='dimensions' className='my-2'>
-                <Form.Label className='mx-2'>Dimensions</Form.Label>
-                <Form.Control
-                  type='text'
-                  placeholder='Enter dimensions'
-                  value={dimensions}
-                  onChange={(e) => setDimensions(e.target.value)}
-                ></Form.Control>
-              </Form.Group>
-
-              <Form.Group controlId='colour' className='my-2'>
-                <Form.Label className='mx-2'>Colour</Form.Label>
-                <Form.Control
-                  type='text'
-                  placeholder='Enter colour'
-                  value={colour}
-                  onChange={(e) => setColour(e.target.value)}
-                ></Form.Control>
-              </Form.Group>
-            </Col>
-          </Row>
-
+            </Row>
+          </Col>
           <Button type='submit' variant='primary' className='my-2 mx-auto'>
             Update
           </Button>

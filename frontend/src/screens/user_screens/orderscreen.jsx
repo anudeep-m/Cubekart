@@ -4,25 +4,44 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../../components/message'
 import Loader from '../../components/loader'
-import { getOrderDetails, payOrder } from '../../actions/orderActions'
+import {
+  getOrderDetails,
+  payOrder,
+  deliverOrder,
+} from '../../actions/orderActions'
 import BWGpayImage from '../../pictures/buywithgpay.png'
-import { ORDER_PAY_RESET } from '../../constants/allConstants'
+import {
+  ORDER_PAY_RESET,
+  ORDER_DELIVER_RESET,
+} from '../../constants/allConstants'
 
-const OrderScreen = ({ match }) => {
+const OrderScreen = ({ match, history }) => {
   const orderID = match.params.id
   const dispatch = useDispatch()
+
   const orderDetails = useSelector((state) => state.orderDetails)
   const { order, loading, error } = orderDetails
+
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
 
   const orderPay = useSelector((state) => state.orderPay)
   const { loading: loadingPay, success: successPay } = orderPay
 
+  const orderDeliver = useSelector((state) => state.orderDeliver)
+  const { loading: loadingDeliver, success: successDeliver } = orderDeliver
+
   useEffect(() => {
-    dispatch({ type: ORDER_PAY_RESET })
-    if (!order || order._id !== orderID || successPay) {
+    if (!userInfo) {
+      history.push('/login')
+    }
+
+    if (!order || successPay || successDeliver || order._id !== orderID) {
+      dispatch({ type: ORDER_PAY_RESET })
+      dispatch({ type: ORDER_DELIVER_RESET })
       dispatch(getOrderDetails(orderID))
     }
-  }, [dispatch, order, orderID, successPay])
+  }, [dispatch, history, orderID, userInfo, successPay, successDeliver, order])
 
   const successPaymentHandler = () => {
     const paymentResult = {
@@ -32,6 +51,10 @@ const OrderScreen = ({ match }) => {
       email_address: order.user.email,
     }
     dispatch(payOrder(orderID, paymentResult))
+  }
+
+  const deliverHandler = () => {
+    dispatch(deliverOrder(orderID))
   }
 
   return loading ? (
@@ -170,6 +193,22 @@ const OrderScreen = ({ match }) => {
                   </Button>
                 </ListGroup.Item>
               )}
+
+              {loadingDeliver && <Loader />}
+              {userInfo &&
+                userInfo.isAdmin &&
+                order.isPaid &&
+                !order.isDelivered && (
+                  <ListGroup.Item className='text-center'>
+                    <Button
+                      type='button'
+                      className='btn btn-block'
+                      onClick={deliverHandler}
+                    >
+                      Mark as Delivered
+                    </Button>
+                  </ListGroup.Item>
+                )}
             </ListGroup>
           </Card>
         </Col>
