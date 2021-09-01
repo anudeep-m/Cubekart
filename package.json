@@ -16,8 +16,19 @@
     "data-import": "node backend/seeder",
     "data-destroy": "node backend/seeder -d"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anudeep-m/Cubekart.git"
+  },
+  "keywords": [
+    "Cubekart"
+  ],
   "author": "Anudeep Muktinutalapati",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/anudeep-m/Cubekart/issues"
+  },
+  "homepage": "https://github.com/anudeep-m/Cubekart#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "dotenv": "^10.0.0",
