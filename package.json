@@ -2,6 +2,9 @@
   "name": "cube-kart",
   "version": "1.0.0",
   "description": "Shopping App for Goggles",
+  "engines": {
+    "node": "14.x"
+  },
   "main": "server.js",
   "type": "module",
   "scripts": {
