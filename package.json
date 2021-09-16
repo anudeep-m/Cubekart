@@ -5,8 +5,8 @@
   "engines": {
     "node": "14.x"
   },
-  "main": "server.js",
   "type": "module",
+  "main": "server.js",
   "scripts": {
     "start": "node backend/server.js",
     "server": "nodemon backend/server",

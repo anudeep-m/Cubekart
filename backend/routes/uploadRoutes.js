@@ -21,6 +21,7 @@ const checkFileType = (file, cb) => {
   const extensionName = fileTypes.test(
     path.extname(file.originalname).toLowerCase()
   )
+
   const mimetype = fileTypes.test(file.mimetype)
 
   if (extensionName && mimetype) {

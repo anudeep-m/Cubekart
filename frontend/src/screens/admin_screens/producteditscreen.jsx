@@ -111,7 +111,6 @@ const ProductEditScreen = ({ match, history }) => {
                   type='text'
                   placeholder='Enter Product Name'
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
                 ></Form.Control>
               </Form.Group>
 

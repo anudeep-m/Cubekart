@@ -95,7 +95,7 @@ const updateProduct = asyncHandler(async (req, res) => {
   }
 })
 
-//Edit Product Details
+//Product Review
 // route - POST /api/products/:id/reviews
 // access - Private
 const createProductReview = asyncHandler(async (req, res) => {

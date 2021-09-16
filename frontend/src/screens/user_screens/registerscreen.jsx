@@ -54,7 +54,7 @@ const RegisterScreen = ({ location, history }) => {
           ></Form.Control>
         </Form.Group>
 
-        <Form.Group controlId='email' className='my-2 '>
+        <Form.Group controlId='email' className='my-2'>
           <Form.Label className='mx-2'>Email Address</Form.Label>
           <Form.Control
             type='email'
@@ -64,7 +64,7 @@ const RegisterScreen = ({ location, history }) => {
           ></Form.Control>
         </Form.Group>
 
-        <Form.Group controlId='password' className='my-2 '>
+        <Form.Group controlId='password' className='my-2'>
           <Form.Label className='mx-2'>Password</Form.Label>
           <Form.Control
             type='password'
@@ -89,9 +89,10 @@ const RegisterScreen = ({ location, history }) => {
           Sign Up{' '}
         </Button>
       </Form>
+
       <Row className='my-2 text-center'>
         <Col>
-          Have an Account?{' '}
+          Have an Account? ~
           <Link to={redirect ? `/login?redirect = ${redirect}` : '/login'}>
             {' '}
             Login
