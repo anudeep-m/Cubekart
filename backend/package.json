@@ -8,13 +8,11 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "start": "node backend/server.js",
-    "server": "nodemon backend/server",
+    "start": "node server.js",
+    "server": "nodemon server",
     "client": "npm start --prefix frontend",
-    "dev": " concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend",
-    "data-import": "node backend/seeder",
-    "data-destroy": "node backend/seeder -d"
+    "data-import": "node seeder",
+    "data-destroy": "node seeder -d"
   },
   "repository": {
     "type": "git",
