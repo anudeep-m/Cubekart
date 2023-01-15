@@ -2,13 +2,11 @@
   "name": "cube-kart",
   "version": "1.0.0",
   "description": "Shopping App for Goggles",
-  "engines": {
-    "node": "14.x"
-  },
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
+    "server": "nodemon server.js",
     "data-import": "node seeder",
     "data-destroy": "node seeder -d"
   },
