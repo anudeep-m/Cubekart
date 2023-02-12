@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "./backend/server.js",
+      "use": "@now/node"
+    },
+    {
+      "src": "./frontend/build",
+      "use": "@now/static-build",
+      "config": { "distDir": "build" }
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/backend/server.js"
+    },
+    { "src": "/(.*)", "dest": "frontend/index.html" }
+  ]
+}
