@@ -15,7 +15,6 @@
     {
       "source": "/(.*)",
       "destination": "/backend/server.js"
-    },
-    { "src": "/(.*)", "dest": "frontend/index.html" }
+    }
   ]
 }
