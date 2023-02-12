@@ -21,7 +21,7 @@ import OrderListScreen from './screens/admin_screens/orderlistscreen'
 
 function App() {
   return (
-    <Router>
+    <Router basename='/'>
       <Header />
       <main className='py-3'>
         <Container>
