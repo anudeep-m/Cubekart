@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/static/css/main.7d54192f.css",
+    "main.js": "/static/js/main.3fd0d56a.js",
+    "static/js/787.d8c6ec95.chunk.js": "/static/js/787.d8c6ec95.chunk.js",
+    "static/media/CuBeKarticon.png": "/static/media/CuBeKarticon.a09f629b4d907b9c3ff7.png",
+    "static/media/gpay.png": "/static/media/gpay.c552fc50a7f2191c69a1.png",
+    "static/media/buywithgpay.png": "/static/media/buywithgpay.71135480a8d0bf5a661a.png",
+    "index.html": "/index.html",
+    "main.7d54192f.css.map": "/static/css/main.7d54192f.css.map",
+    "main.3fd0d56a.js.map": "/static/js/main.3fd0d56a.js.map",
+    "787.d8c6ec95.chunk.js.map": "/static/js/787.d8c6ec95.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7d54192f.css",
+    "static/js/main.3fd0d56a.js"
+  ]
+}
