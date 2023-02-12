@@ -3,12 +3,7 @@
   "builds": [
     {
       "src": "./backend/server.js",
-      "use": "@now/node"
-    },
-    {
-      "src": "./frontend/build",
-      "use": "@now/static-build",
-      "config": { "distDir": "build" }
+      "use": "@vercel/node"
     }
   ],
   "rewrites": [
