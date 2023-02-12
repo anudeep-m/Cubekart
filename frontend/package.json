@@ -1,7 +1,7 @@
 {
   "name": "frontend",
   "proxy": "http://127.0.0.1:5000",
-  "homepage": "https://dev-cubekart.vercel.app",
+  "homepage": "https://cubekart.vercel.app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
