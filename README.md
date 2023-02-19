@@ -1,6 +1,6 @@
 # Cubekart
 
-https://cubekart.herokuapp.com
+https://cubekart.onrender.com
 
 Cubekart is an E-Commerce Web Application built using MERN Stack. 
 
@@ -17,4 +17,3 @@ State Management -Redux,
 Backend - NodeJS, ExpressJS,
 
 Database - MongoDB.
-
