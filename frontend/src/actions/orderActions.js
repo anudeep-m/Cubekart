@@ -37,7 +37,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.post(`/api/orders`, order, config)
+    const { data } = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/orders`, order, config)
 
     dispatch({
       type: ORDER_CREATE_SUCCESS,
@@ -70,7 +70,7 @@ export const getOrderDetails = (orderId) => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get(`/api/orders/${orderId}`, config)
+    const { data } = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/orders/${orderId}`, config)
 
     dispatch({
       type: ORDER_DETAILS_SUCCESS,
@@ -106,7 +106,7 @@ export const payOrder =
       }
 
       const { data } = await axios.put(
-        `/api/orders/${orderId}/pay`,
+        `${process.env.REACT_APP_SERVER_URL}/api/orders/${orderId}/pay`,
         paymentResult,
         config
       )
@@ -141,7 +141,7 @@ export const deliverOrder = (orderID) => async (dispatch, getState) => {
     }
 
     const { data } = await axios.put(
-      `/api/orders/${orderID}/deliver`,
+      `${process.env.REACT_APP_SERVER_URL}/api/orders/${orderID}/deliver`,
       {},
       config
     )
@@ -177,7 +177,7 @@ export const listMyOrders = () => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get(`/api/orders/myorders`, config)
+    const { data } = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/orders/myorders`, config)
 
     dispatch({
       type: MY_ORDERS_LIST_SUCCESS,
@@ -210,7 +210,7 @@ export const listallOrdersBA = () => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.get(`/api/orders`, config)
+    const { data } = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/orders`, config)
 
     dispatch({
       type: ORDERS_LIST_BA_SUCCESS,

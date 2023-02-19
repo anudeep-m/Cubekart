@@ -1,7 +1,5 @@
 {
   "name": "frontend",
-  "proxy": "https://cubekart-api.vercel.app",
-  "homepage": "https://cubekart.vercel.app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

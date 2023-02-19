@@ -1,6 +1,7 @@
 import express from 'express'
 import connectDB from './config/db.js'
 import dotenv from 'dotenv'
+import cors from "cors"
 import path from 'path'
 import productRoutes from './routes/productRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
@@ -16,6 +17,13 @@ const app = express()
 
 //Make Node to accept json formatted input
 app.use(express.json())
+
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://cubekart.onrender.com"],
+    credentials: true,
+  })
+);
 
 //Routes
 app.use('/api/products', productRoutes)

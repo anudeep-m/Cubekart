@@ -33,7 +33,7 @@ export const listProducts =
       dispatch({ type: PRODUCT_LIST_REQUEST })
 
       const { data } = await axios.get(
-        `/api/products?keyword=${keyword}&pagenumber=${pageNumber}`
+        `${process.env.REACT_APP_SERVER_URL}/api/products?keyword=${keyword}&pagenumber=${pageNumber}`
       )
 
       dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data })
@@ -52,7 +52,7 @@ export const listTopProducts = () => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_TOP_REQUEST })
 
-    const { data } = await axios.get(`/api/products/top`)
+    const { data } = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/products/top`)
 
     dispatch({
       type: PRODUCT_TOP_SUCCESS,
@@ -73,7 +73,7 @@ export const singleProduct = (id) => async (dispatch) => {
   try {
     dispatch({ type: ONE_PRODUCT_REQUEST })
 
-    const { data } = await axios.get(`/api/products/${id}`)
+    const { data } = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/products/${id}`)
 
     dispatch({ type: ONE_PRODUCT_SUCCESS, payload: data })
   } catch (error) {
@@ -91,7 +91,7 @@ export const productDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_BA_REQUEST })
 
-    const { data } = await axios.get(`/api/products/${id}`)
+    const { data } = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/products/${id}`)
 
     dispatch({ type: PRODUCT_DETAILS_BA_SUCCESS, payload: data })
   } catch (error) {
@@ -119,7 +119,7 @@ export const addProductBA = () => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.post(`/api/products`, {}, config)
+    const { data } = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/products`, {}, config)
 
     dispatch({ type: PRODUCT_ADD_BA_SUCCESS, payload: data })
   } catch (error) {
@@ -147,7 +147,7 @@ export const deleteProductBA = (productId) => async (dispatch, getState) => {
       },
     }
 
-    await axios.delete(`/api/products/${productId}`, config)
+    await axios.delete(`${process.env.REACT_APP_SERVER_URL}/api/products/${productId}`, config)
 
     dispatch({ type: PRODUCT_DELETE_BA_SUCCESS })
   } catch (error) {
@@ -177,7 +177,7 @@ export const updateProductBA = (product) => async (dispatch, getState) => {
     }
 
     const { data } = await axios.put(
-      `/api/products/${product._id}`,
+      `${process.env.REACT_APP_SERVER_URL}/api/products/${product._id}`,
       product,
       config
     )
@@ -210,7 +210,7 @@ export const createProductReview =
         },
       }
 
-      await axios.post(`/api/products/${productId}/reviews`, review, config)
+      await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/products/${productId}/reviews`, review, config)
 
       dispatch({ type: PRODUCT_CREATE_REVIEW_SUCCESS })
     } catch (error) {
