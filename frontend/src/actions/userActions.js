@@ -40,7 +40,7 @@ export const login = (email, password) => async (dispatch) => {
     }
 
     const { data } = await axios.post(
-      '${process.env.REACT_APP_SERVER_URL}/api/users/login',
+      `${process.env.REACT_APP_SERVER_URL}/api/users/login`,
       { email, password },
       config
     )
@@ -87,7 +87,7 @@ export const register = (name, email, password) => async (dispatch) => {
     }
 
     const { data } = await axios.post(
-      '${process.env.REACT_APP_SERVER_URL}/api/users',
+      `${process.env.REACT_APP_SERVER_URL}/api/users`,
       { name, email, password },
       config
     )
