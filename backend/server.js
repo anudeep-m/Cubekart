@@ -20,7 +20,7 @@ app.use(express.json())
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://cubekart.onrender.com"],
+    origin: ["http://localhost:3000", "https://cubekart.onrender.com", "https://cubekart.anudeep.info"],
     credentials: true,
   })
 );
